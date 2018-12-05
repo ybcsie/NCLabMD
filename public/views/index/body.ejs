@@ -7,71 +7,88 @@
 					<h3 class="masthead-brand"></h3>
 					<nav>
 						<ul class="nav masthead-nav">
+							<li class="nclabmd">
+								<a href="<%- serverURL %>">
+									<i class="fa fa-file-text"></i> NCLabMD
+								</a>
+							</li>
+
 							<li class="ui-home<% if(!signin) { %> active<% } %>">
 								<a href="#">
-									<%= __('Intro') %>
+									Home
 								</a>
 							</li>
-							<li class="ui-history<% if(signin) { %> active<% } %>">
-								<a href="#">
-									<%= __('History') %>
-								</a>
+							<li class="ui-laball">
+								<a href="#">Lab Notes</a>
 							</li>
-							<div class="ui-signin" style="float: right; margin-top: 8px;<% if(signin) { %> display: none;<% } %>">
-								<% if (allowAnonymous) { %>
-									<a type="button" href="<%- serverURL %>/new" class="btn btn-sm btn-primary">
-										<i class="fa fa-plus"></i>
-										<%= __('New guest note') %>
-									</a>
-									<% } %>
-										<% if (authProviders.facebook || authProviders.twitter || authProviders.github || authProviders.gitlab || authProviders.mattermost || authProviders.dropbox || authProviders.google || authProviders.ldap || authProviders.saml || authProviders.oauth2 || authProviders.email) { %>
-											<button class="btn btn-sm btn-success ui-signin" data-toggle="modal" data-target=".signin-modal">
-												<%= __('Sign In') %>
-											</button>
+
+							<% if(signin) { %>
+								<li class="ui-meall">
+									<a href="#">My Notes</a>
+								</li>
+								<% } %>
+
+									<li class="ui-history<% if(signin) { %> active<% } %>">
+										<a href="#">
+											History
+										</a>
+									</li>
+
+									<div class="ui-signin" style="float: right; margin-top: 8px;<% if(signin) { %> display: none;<% } %>">
+										<% if (allowAnonymous) { %>
+											<a type="button" href="<%- serverURL %>/new" class="btn btn-sm btn-primary">
+												<i class="fa fa-plus"></i>
+												<%= __('New guest note') %>
+											</a>
 											<% } %>
-							</div>
-							<div class="ui-signout" style="float: right; margin-top: 8px;<% if(!signin) { %> display: none;<% } %>">
-								<a type="button" href="<%- serverURL %>/new" class="btn btn-sm btn-primary">
-									<i class="fa fa-plus"></i>
-									<%= __('New note') %>
-								</a>
-								<span class="ui-profile dropdown pull-right">
-									<button id="profileLabel" class="btn btn-sm btn-link ui-profile-label" style="padding-right: 0;" data-toggle="dropdown" aria-haspopup="true"
-									 aria-expanded="false">
-										<img class="ui-avatar" width="20" height="20">
-										<span class="hidden-xs hidden-sm">&ensp;
-											<span class="ui-name"></span>
-										</span>&ensp;
-										<i class="fa fa-caret-down"></i>
-									</button>
-									<ul class="dropdown-menu" aria-labelledby="profileLabel">
-										<li>
-											<a href="<%- serverURL %>/features">
-												<i class="fa fa-dot-circle-o fa-fw"></i>
-												<%= __('Features') %>
-											</a>
-										</li>
-										<li>
-											<a href="<%- serverURL %>/me/export">
-												<i class="fa fa-cloud-download fa-fw"></i>
-												<%= __('Export user data') %>
-											</a>
-										</li>
-										<li>
-											<a class="ui-delete-user" data-toggle="modal" data-target=".delete-user-modal">
-												<i class="fa fa-trash fa-fw"></i>
-												<%= __('Delete user') %>
-											</a>
-										</li>
-										<li>
-											<a href="<%- serverURL %>/logout">
-												<i class="fa fa-sign-out fa-fw"></i>
-												<%= __('Sign Out') %>
-											</a>
-										</li>
-									</ul>
-								</span>
-							</div>
+												<% if (authProviders.facebook || authProviders.twitter || authProviders.github || authProviders.gitlab || authProviders.mattermost || authProviders.dropbox || authProviders.google || authProviders.ldap || authProviders.saml || authProviders.oauth2 || authProviders.email) { %>
+													<button class="btn btn-sm btn-success ui-signin" data-toggle="modal" data-target=".signin-modal">
+														<%= __('Sign In') %>
+													</button>
+													<% } %>
+									</div>
+									<div class="ui-signout" style="float: right; margin-top: 8px;<% if(!signin) { %> display: none;<% } %>">
+										<a type="button" href="<%- serverURL %>/new" class="btn btn-sm btn-primary">
+											<i class="fa fa-plus"></i>
+											<%= __('New note') %>
+										</a>
+										<span class="ui-profile dropdown pull-right">
+											<button id="profileLabel" class="btn btn-sm btn-link ui-profile-label" style="padding-right: 0;" data-toggle="dropdown" aria-haspopup="true"
+											 aria-expanded="false">
+												<img class="ui-avatar" width="20" height="20">
+												<span class="hidden-xs hidden-sm">&ensp;
+													<span class="ui-name"></span>
+												</span>&ensp;
+												<i class="fa fa-caret-down"></i>
+											</button>
+											<ul class="dropdown-menu" aria-labelledby="profileLabel">
+												<li>
+													<a href="<%- serverURL %>/features">
+														<i class="fa fa-dot-circle-o fa-fw"></i>
+														<%= __('Features') %>
+													</a>
+												</li>
+												<li>
+													<a href="<%- serverURL %>/me/export">
+														<i class="fa fa-cloud-download fa-fw"></i>
+														<%= __('Export user data') %>
+													</a>
+												</li>
+												<li>
+													<a class="ui-delete-user" data-toggle="modal" data-target=".delete-user-modal">
+														<i class="fa fa-trash fa-fw"></i>
+														<%= __('Delete user') %>
+													</a>
+												</li>
+												<li>
+													<a href="<%- serverURL %>/logout">
+														<i class="fa fa-sign-out fa-fw"></i>
+														<%= __('Sign Out') %>
+													</a>
+												</li>
+											</ul>
+										</span>
+									</div>
 						</ul>
 					</nav>
 				</div>
@@ -80,11 +97,16 @@
 			<div id="home" class="section" <% if(signin) { %> style="display:none;"
 				<% } %>>
 					<div class="inner cover">
+						<br>
+						<br>
 						<h1 class="cover-heading">
 							<i class="fa fa-file-text"></i> NCLabMD</h1>
 						<p class="lead">
 							NCKU ES NCLab Markdown System
 						</p>
+						<br>
+						<br>
+
 						<% if (infoMessage && infoMessage.length > 0) { %>
 							<div class="alert alert-info" style="max-width: 400px; margin: 0 auto;">
 								<%= infoMessage %>
@@ -106,7 +128,7 @@
 												<%= __('or') %>
 											</span>
 											<% } %>
-												<span class="ui-signin">
+												<span>
 													<a type="button" href="<%- serverURL %>/features" class="btn btn-lg btn-primary" style="min-width: 200px;">
 														<%= __('Explore all features') %>
 													</a>
@@ -115,7 +137,7 @@
 												</span>
 												<div class="lead row" style="width: 90%; margin: 0 auto;">
 													<div class="col-md-4 inner">
-														<a href="<%- serverURL %>/features#share-notes">
+														<a href="<%- serverURL %>/features#Share-Notes">
 															<i class="fa fa-bolt fa-3x"></i>
 															<h4>
 																<%= __('Collaborate with URL') %>
@@ -123,7 +145,7 @@
 														</a>
 													</div>
 													<div class="col-md-4 inner">
-														<a href="<%- serverURL %>/features#mathjax">
+														<a href="<%- serverURL %>/features#MathJax">
 															<i class="fa fa-bar-chart fa-3x"></i>
 															<h4>
 																<%= __('Support charts and MathJax') %>
@@ -131,7 +153,7 @@
 														</a>
 													</div>
 													<div class="col-md-4 inner">
-														<a href="<%- serverURL %>/features#slide-mode">
+														<a href="<%- serverURL %>/features#Slide-Mode">
 															<i class="fa fa-tv fa-3x"></i>
 															<h4>
 																<%= __('Support slide mode') %>
@@ -140,23 +162,19 @@
 													</div>
 												</div>
 					</div>
+
 			</div>
 
-			<div id="history" class="section" <% if(!signin) { %> style="display:none;"
+			<div id="laball" class="section" <% if(!signin) { %> style="display:none;"
 				<% } %>>
-					<div class="ui-signin" <% if(signin) { %> style="display:none;"
-						<% } %>>
-							<p>
-								<%= __('Below is the history from browser') %>
-							</p>
-					</div>
 					<br>
+
 					<form class="form-inline">
 						<div class="form-group" style="vertical-align: bottom;">
-							<input class="form-control ui-use-tags" placeholder="<%= __('Select tags...') %>" />
+							<input id="ui-laball-use-tags" class="form-control ui-use-tags" placeholder="<%= __('Select tags...') %>" />
 						</div>
 						<div class="form-group">
-							<input class="search form-control" placeholder="<%= __('Search keyword...') %>" />
+							<input id="laball-search" class="search form-control" placeholder="<%= __('Search keyword...') %>" />
 						</div>
 						<a href="#" class="sort btn btn-default" data-sort="text" title="<%= __('Sort by title') %>">
 							<%= __('Title') %>
@@ -164,32 +182,93 @@
 						<a href="#" class="sort btn btn-default" data-sort="timestamp" title="<%= __('Sort by time') %>">
 							<%= __('Time') %>
 						</a>
-						<span class="hidden-xs hidden-sm">
-							<a href="#" class="btn btn-default ui-save-history" title="<%= __('Export history') %>">
-								<i class="fa fa-save"></i>
-							</a>
-							<span class="btn btn-default btn-file ui-open-history" title="<%= __('Import history') %>">
-								<i class="fa fa-folder-open-o"></i>
-								<input type="file" />
-							</span>
-							<a href="#" class="btn btn-default ui-clear-history" title="<%= __('Clear history') %>" data-toggle="modal" data-target=".delete-history-modal">
-								<i class="fa fa-trash-o"></i>
-							</a>
-						</span>
-						<a href="#" class="btn btn-default ui-refresh-history" title="<%= __('Refresh history') %>">
+						<a href="#" class="btn btn-default ui-refresh-laball" title="<%= __('Refresh history') %>">
 							<i class="fa fa-refresh"></i>
 						</a>
 					</form>
-					<h4 class="ui-nohistory" style="display:none;">
-						<%= __('No history') %>
+					<h4 class="ui-nolaball" style="display:none;">
+						Nothing here...
 					</h4>
-					<a href="#" class="btn btn-primary ui-import-from-browser" style="display:none;">
-						<%= __('Import from browser') %>
-					</a>
-					<ul id="history-list" class="list">
+					<ul id="laball-list" class="list">
 					</ul>
-					<ul class="pagination"></ul>
+					<ul id="laball-pagination" class="pagination"></ul>
 			</div>
+
+			<div id="meall" class="section" style="display:none;">
+				<br>
+				<form class="form-inline">
+					<div class="form-group" style="vertical-align: bottom;">
+						<input id="ui-meall-use-tags" class="form-control ui-use-tags" placeholder="<%= __('Select tags...') %>" />
+					</div>
+					<div class="form-group">
+						<input id="meall-search" class="search form-control" placeholder="<%= __('Search keyword...') %>" />
+					</div>
+					<a href="#" class="sort btn btn-default" data-sort="text" title="<%= __('Sort by title') %>">
+						<%= __('Title') %>
+					</a>
+					<a href="#" class="sort btn btn-default" data-sort="timestamp" title="<%= __('Sort by time') %>">
+						<%= __('Time') %>
+					</a>
+					<a href="#" class="btn btn-default ui-refresh-meall" title="<%= __('Refresh history') %>">
+						<i class="fa fa-refresh"></i>
+					</a>
+				</form>
+				<h4 class="ui-nomeall" style="display:none;">
+					Nothing here...
+				</h4>
+				<ul id="meall-list" class="list">
+				</ul>
+				<ul id="meall-pagination" class="pagination"></ul>
+			</div>
+
+			<div id="history" class="section" style="display:none;">
+				<div class="ui-signin" <% if(signin) { %> style="display:none;"
+					<% } %>>
+						<p>
+							<%= __('Below is the history from browser') %>
+						</p>
+				</div>
+				<br>
+				<form class="form-inline">
+					<div class="form-group" style="vertical-align: bottom;">
+						<input id="ui-history-use-tags" class="form-control ui-use-tags" placeholder="<%= __('Select tags...') %>" />
+					</div>
+					<div class="form-group">
+						<input id="history-search" class="search form-control" placeholder="<%= __('Search keyword...') %>" />
+					</div>
+					<a href="#" class="sort btn btn-default" data-sort="text" title="<%= __('Sort by title') %>">
+						<%= __('Title') %>
+					</a>
+					<a href="#" class="sort btn btn-default" data-sort="timestamp" title="<%= __('Sort by time') %>">
+						<%= __('Time') %>
+					</a>
+					<span class="hidden-xs hidden-sm">
+						<a href="#" class="btn btn-default ui-save-history" title="<%= __('Export history') %>">
+							<i class="fa fa-save"></i>
+						</a>
+						<span class="btn btn-default btn-file ui-open-history" title="<%= __('Import history') %>">
+							<i class="fa fa-folder-open-o"></i>
+							<input type="file" />
+						</span>
+						<a href="#" class="btn btn-default ui-clear-history" title="<%= __('Clear history') %>" data-toggle="modal" data-target=".delete-history-modal">
+							<i class="fa fa-trash-o"></i>
+						</a>
+					</span>
+					<a href="#" class="btn btn-default ui-refresh-history" title="<%= __('Refresh history') %>">
+						<i class="fa fa-refresh"></i>
+					</a>
+				</form>
+				<h4 class="ui-nohistory" style="display:none;">
+					<%= __('No history') %>
+				</h4>
+				<a href="#" class="btn btn-primary ui-import-from-browser" style="display:none;">
+					<%= __('Import from browser') %>
+				</a>
+				<ul id="history-list" class="list">
+				</ul>
+				<ul id="history-pagination" class="pagination"></ul>
+			</div>
+
 
 			<div class="mastfoot">
 				<div class="inner">
