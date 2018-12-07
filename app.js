@@ -30,37 +30,37 @@ var csp = require('./lib/csp')
 var app = express()
 var server = null
 if (config.useSSL) {
-  var ca = (function () {
-    var i, len, results
-    results = []
-    for (i = 0, len = config.sslCAPath.length; i < len; i++) {
-      results.push(fs.readFileSync(config.sslCAPath[i], 'utf8'))
-    }
-    return results
-  })()
-  var options = {
-    key: fs.readFileSync(config.sslKeyPath, 'utf8'),
-    cert: fs.readFileSync(config.sslCertPath, 'utf8'),
-    ca: ca,
-    dhparam: fs.readFileSync(config.dhParamPath, 'utf8'),
-    requestCert: false,
-    rejectUnauthorized: false
-  }
-  server = require('https').createServer(options, app)
+	var ca = (function () {
+		var i, len, results
+		results = []
+		for (i = 0, len = config.sslCAPath.length; i < len; i++) {
+			results.push(fs.readFileSync(config.sslCAPath[i], 'utf8'))
+		}
+		return results
+	})()
+	var options = {
+		key: fs.readFileSync(config.sslKeyPath, 'utf8'),
+		cert: fs.readFileSync(config.sslCertPath, 'utf8'),
+		ca: ca,
+		dhparam: fs.readFileSync(config.dhParamPath, 'utf8'),
+		requestCert: false,
+		rejectUnauthorized: false
+	}
+	server = require('https').createServer(options, app)
 } else {
-  server = require('http').createServer(app)
+	server = require('http').createServer(app)
 }
 
 // logger
 app.use(morgan('combined', {
-  'stream': logger
+	'stream': logger
 }))
 
 // socket io
 var io = require('socket.io')(server)
 io.engine.ws = new (require('ws').Server)({
-  noServer: true,
-  perMessageDeflate: false
+	noServer: true,
+	perMessageDeflate: false
 })
 
 // others
@@ -74,7 +74,7 @@ app.use(methodOverride('_method'))
 
 // session store
 var sessionStore = new SequelizeStore({
-  db: models.sequelize
+	db: models.sequelize
 })
 
 // compression
@@ -82,21 +82,21 @@ app.use(compression())
 
 // use hsts to tell https users stick to this
 if (config.hsts.enable) {
-  app.use(helmet.hsts({
-    maxAge: config.hsts.maxAgeSeconds * 1000,
-    includeSubdomains: config.hsts.includeSubdomains,
-    preload: config.hsts.preload
-  }))
+	app.use(helmet.hsts({
+		maxAge: config.hsts.maxAgeSeconds * 1000,
+		includeSubdomains: config.hsts.includeSubdomains,
+		preload: config.hsts.preload
+	}))
 } else if (config.useSSL) {
-  logger.info('Consider enabling HSTS for extra security:')
-  logger.info('https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security')
+	logger.info('Consider enabling HSTS for extra security:')
+	logger.info('https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security')
 }
 
 // Add referrer policy to improve privacy
 app.use(
-  helmet.referrerPolicy({
-    policy: 'same-origin'
-  })
+	helmet.referrerPolicy({
+		policy: 'same-origin'
+	})
 )
 
 // Generate a random nonce per request, for CSP with inline scripts
@@ -105,18 +105,18 @@ app.use(csp.addNonceToLocals)
 // use Content-Security-Policy to limit XSS, dangerous plugins, etc.
 // https://helmetjs.github.io/docs/csp/
 if (config.csp.enable) {
-  app.use(helmet.contentSecurityPolicy({
-    directives: csp.computeDirectives()
-  }))
+	app.use(helmet.contentSecurityPolicy({
+		directives: csp.computeDirectives()
+	}))
 } else {
-  logger.info('Content-Security-Policy is disabled. This may be a security risk.')
+	logger.info('Content-Security-Policy is disabled. This may be a security risk.')
 }
 
 i18n.configure({
-  locales: ['en', 'zh-CN', 'zh-TW', 'fr', 'de', 'ja', 'es', 'ca', 'el', 'pt', 'it', 'tr', 'ru', 'nl', 'hr', 'pl', 'uk', 'hi', 'sv', 'eo', 'da', 'ko', 'id'],
-  cookie: 'locale',
-  directory: path.join(__dirname, '/locales'),
-  updateFiles: config.updateI18nFiles
+	locales: ['en', 'zh-CN', 'zh-TW', 'fr', 'de', 'ja', 'es', 'ca', 'el', 'pt', 'it', 'tr', 'ru', 'nl', 'hr', 'pl', 'uk', 'hi', 'sv', 'eo', 'da', 'ko', 'id'],
+	cookie: 'locale',
+	directory: path.join(__dirname, '/locales'),
+	updateFiles: config.updateI18nFiles
 })
 
 app.use(cookieParser())
@@ -132,25 +132,25 @@ app.use('/default.md', express.static(path.resolve(__dirname, config.defaultNote
 
 // session
 app.use(session({
-  name: config.sessionName,
-  secret: config.sessionSecret,
-  resave: false, // don't save session if unmodified
-  saveUninitialized: true, // always create session to ensure the origin
-  rolling: true, // reset maxAge on every response
-  cookie: {
-    maxAge: config.sessionLife
-  },
-  store: sessionStore
+	name: config.sessionName,
+	secret: config.sessionSecret,
+	resave: false, // don't save session if unmodified
+	saveUninitialized: true, // always create session to ensure the origin
+	rolling: true, // reset maxAge on every response
+	cookie: {
+		maxAge: config.sessionLife
+	},
+	store: sessionStore
 }))
 
 // session resumption
 var tlsSessionStore = {}
 server.on('newSession', function (id, data, cb) {
-  tlsSessionStore[id.toString('hex')] = data
-  cb()
+	tlsSessionStore[id.toString('hex')] = data
+	cb()
 })
 server.on('resumeSession', function (id, cb) {
-  cb(null, tlsSessionStore[id.toString('hex')] || null)
+	cb(null, tlsSessionStore[id.toString('hex')] || null)
 })
 
 // middleware which blocks requests when we're too busy
@@ -182,22 +182,23 @@ app.locals.sourceURL = config.sourceURL
 app.locals.allowAnonymous = config.allowAnonymous
 app.locals.allowAnonymousEdits = config.allowAnonymousEdits
 app.locals.allowPDFExport = config.allowPDFExport
+app.locals.registerKey = config.registerKey
 app.locals.authProviders = {
-  facebook: config.isFacebookEnable,
-  twitter: config.isTwitterEnable,
-  github: config.isGitHubEnable,
-  gitlab: config.isGitLabEnable,
-  mattermost: config.isMattermostEnable,
-  dropbox: config.isDropboxEnable,
-  google: config.isGoogleEnable,
-  ldap: config.isLDAPEnable,
-  ldapProviderName: config.ldap.providerName,
-  saml: config.isSAMLEnable,
-  oauth2: config.isOAuth2Enable,
-  oauth2ProviderName: config.oauth2.providerName,
-  openID: config.isOpenIDEnable,
-  email: config.isEmailEnable,
-  allowEmailRegister: config.allowEmailRegister
+	facebook: config.isFacebookEnable,
+	twitter: config.isTwitterEnable,
+	github: config.isGitHubEnable,
+	gitlab: config.isGitLabEnable,
+	mattermost: config.isMattermostEnable,
+	dropbox: config.isDropboxEnable,
+	google: config.isGoogleEnable,
+	ldap: config.isLDAPEnable,
+	ldapProviderName: config.ldap.providerName,
+	saml: config.isSAMLEnable,
+	oauth2: config.isOAuth2Enable,
+	oauth2ProviderName: config.oauth2.providerName,
+	openID: config.isOpenIDEnable,
+	email: config.isEmailEnable,
+	allowEmailRegister: config.allowEmailRegister
 }
 
 // Export/Import menu items
@@ -215,19 +216,19 @@ app.use(require('./lib/web/noteRouter'))
 
 // response not found if no any route matxches
 app.get('*', function (req, res) {
-  response.errorNotFound(res)
+	response.errorNotFound(res)
 })
 
 // socket.io secure
 io.use(realtime.secure)
 // socket.io auth
 io.use(passportSocketIo.authorize({
-  cookieParser: cookieParser,
-  key: config.sessionName,
-  secret: config.sessionSecret,
-  store: sessionStore,
-  success: realtime.onAuthorizeSuccess,
-  fail: realtime.onAuthorizeFail
+	cookieParser: cookieParser,
+	key: config.sessionName,
+	secret: config.sessionSecret,
+	store: sessionStore,
+	success: realtime.onAuthorizeSuccess,
+	fail: realtime.onAuthorizeFail
 }))
 // socket.io heartbeat
 io.set('heartbeat interval', config.heartbeatInterval)
@@ -236,69 +237,69 @@ io.set('heartbeat timeout', config.heartbeatTimeout)
 io.sockets.on('connection', realtime.connection)
 
 // listen
-function startListen () {
-  var address
-  var listenCallback = function () {
-    var schema = config.useSSL ? 'HTTPS' : 'HTTP'
-    logger.info('%s Server listening at %s', schema, address)
-    realtime.maintenance = false
-  }
+function startListen() {
+	var address
+	var listenCallback = function () {
+		var schema = config.useSSL ? 'HTTPS' : 'HTTP'
+		logger.info('%s Server listening at %s', schema, address)
+		realtime.maintenance = false
+	}
 
-  // use unix domain socket if 'path' is specified
-  if (config.path) {
-    address = config.path
-    server.listen(config.path, listenCallback)
-  } else {
-    address = config.host + ':' + config.port
-    server.listen(config.port, config.host, listenCallback)
-  }
+	// use unix domain socket if 'path' is specified
+	if (config.path) {
+		address = config.path
+		server.listen(config.path, listenCallback)
+	} else {
+		address = config.host + ':' + config.port
+		server.listen(config.port, config.host, listenCallback)
+	}
 }
 
 // sync db then start listen
 models.sequelize.sync().then(function () {
-  // check if realtime is ready
-  if (realtime.isReady()) {
-    models.Revision.checkAllNotesRevision(function (err, notes) {
-      if (err) throw new Error(err)
-      if (!notes || notes.length <= 0) return startListen()
-    })
-  } else {
-    throw new Error('server still not ready after db synced')
-  }
+	// check if realtime is ready
+	if (realtime.isReady()) {
+		models.Revision.checkAllNotesRevision(function (err, notes) {
+			if (err) throw new Error(err)
+			if (!notes || notes.length <= 0) return startListen()
+		})
+	} else {
+		throw new Error('server still not ready after db synced')
+	}
 })
 
 // log uncaught exception
 process.on('uncaughtException', function (err) {
-  logger.error('An uncaught exception has occured.')
-  logger.error(err)
-  logger.error('Process will exit now.')
-  process.exit(1)
+	logger.error('An uncaught exception has occured.')
+	logger.error(err)
+	logger.error('Process will exit now.')
+	process.exit(1)
 })
 
 // install exit handler
-function handleTermSignals () {
-  logger.info('CodiMD has been killed by signal, try to exit gracefully...')
-  realtime.maintenance = true
-  // disconnect all socket.io clients
-  Object.keys(io.sockets.sockets).forEach(function (key) {
-    var socket = io.sockets.sockets[key]
-    // notify client server going into maintenance status
-    socket.emit('maintenance')
-    setTimeout(function () {
-      socket.disconnect(true)
-    }, 0)
-  })
-  var checkCleanTimer = setInterval(function () {
-    if (realtime.isReady()) {
-      models.Revision.checkAllNotesRevision(function (err, notes) {
-        if (err) return logger.error(err)
-        if (!notes || notes.length <= 0) {
-          clearInterval(checkCleanTimer)
-          return process.exit(0)
-        }
-      })
-    }
-  }, 100)
+function handleTermSignals() {
+	logger.info('CodiMD has been killed by signal, try to exit gracefully...')
+	realtime.maintenance = true
+	// disconnect all socket.io clients
+	Object.keys(io.sockets.sockets).forEach(function (key) {
+		var socket = io.sockets.sockets[key]
+		// notify client server going into maintenance status
+		socket.emit('maintenance')
+		setTimeout(function () {
+			socket.disconnect(true)
+		}, 0)
+	})
+	var checkCleanTimer = setInterval(function () {
+		if (realtime.isReady()) {
+			models.Revision.checkAllNotesRevision(function (err, notes) {
+				if (err) return logger.error(err)
+				if (!notes || notes.length <= 0) {
+					clearInterval(checkCleanTimer)
+					return process.exit(0)
+				}
+			})
+		}
+	}, 100)
 }
 process.on('SIGINT', handleTermSignals)
 process.on('SIGTERM', handleTermSignals)

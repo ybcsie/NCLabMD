@@ -785,3 +785,21 @@ $('#laball-search').keyup(() => {
 	checkLaballList()
 })
 
+//login
+$('#registerKey').on('change', () => {
+	var regkey = $('#registerKey').val();
+	$('.btn-facebook').attr('href', `${serverurl}/auth/facebook?regkey=` + regkey)
+	$('.btn-google').attr('href', `${serverurl}/auth/google?regkey=` + regkey)
+
+	$('.btn-twitter').attr('href', `${serverurl}/auth/twitter?regkey=` + regkey)
+	$('.btn-github').attr('href', `${serverurl}/auth/github?regkey=` + regkey)
+
+	$('.btn-gitlab').attr('href', `${serverurl}/auth/gitlab?regkey=` + regkey)
+	$('.btn-mattermost').attr('href', `${serverurl}/auth/mattermost?regkey=` + regkey)
+
+	$('.btn-dropbox').attr('href', `${serverurl}/auth/dropbox?regkey=` + regkey)
+	$('.btn-saml').attr('href', `${serverurl}/auth/saml?regkey=` + regkey)
+
+	$('.btn-oauth2').attr('href', `${serverurl}/auth/oauth2?regkey=` + regkey)
+
+})
