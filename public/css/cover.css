@@ -381,3 +381,20 @@ select {
         max-width: 100%;
     }
 }
+
+
+.btn-social { font-family: "Roboto", Helvetica, Arial, sans-serif; font-weight: 500; font-size: 14px; line-height: 24px; }
+.btn-google { background-color: #fff; color: #757575; }
+.btn-google:hover, .btn-google:focus, .btn-google:active, .btn-google.active,
+.open > .dropdown-toggle.btn-google { background-color: #eee; color: #757575; }
+.btn-google.disabled, .btn-google[disabled], fieldset[disabled] .btn-google,
+.btn-google.disabled:hover, .btn-google[disabled]:hover,
+fieldset[disabled] .btn-google:hover, .btn-google.disabled:focus,
+.btn-google[disabled]:focus, fieldset[disabled] .btn-google:focus,
+.btn-google.disabled:active, .btn-google[disabled]:active,
+fieldset[disabled] .btn-google:active, .btn-google.disabled.active,
+btn-google[disabled].active, fieldset[disabled] .btn-google.active { background-color: rgba( 0, 0, 0, .08 ); }
+.btn-google .icon::before { content: ' '; display: block; width: 34px; height: 2em; margin: auto; background-position: center; background-repeat: no-repeat; background-size: contain; }
+.btn-google .icon-google::before { width: 21px; height: 44px; background-image: url( "/super-g.svg" ); }
+.btn-google .disabled .icon-google::before,
+.btn-google [disabled] .icon-google::before { background-image: url( "/super-g-disabled.svg" ); }
