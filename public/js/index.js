@@ -1061,7 +1061,7 @@ ui.toolbar.uploadImage.bind('change', function (e) {
 	var files = e.target.files || e.dataTransfer.files
 	e.dataTransfer = {}
 	e.dataTransfer.files = files
-	inlineAttach.onDrop(e)
+	inlineAttach.onDrop(e, true)
 })
 // toc
 ui.toc.dropdown.click(function (e) {
