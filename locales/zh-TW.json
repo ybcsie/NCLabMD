@@ -8,6 +8,7 @@
 	"Collaborate with URL": "使用網址協作",
 	"Support charts and MathJax": "支援圖表與 MathJax",
 	"Support slide mode": "支援簡報模式",
+	"Register": "註冊",
 	"Sign In": "登入",
 	"Below is the history from browser": "以下為來自瀏覽器的紀錄",
 	"Welcome!": "歡迎！",
@@ -32,6 +33,7 @@
 	"Cancel": "取消",
 	"Yes, do it!": "沒錯，就這樣辦！",
 	"Choose method": "選擇方式",
+	"Register via %s": "透過 %s 註冊",
 	"Sign in via %s": "透過 %s 登入",
 	"New": "新增",
 	"Publish": "發表",
@@ -104,5 +106,10 @@
 	"Select Visibility Level": "選擇可見層級",
 	"Night Theme": "夜間主題",
 	"Do you really want to delete this note?": "確定要刪除這個文件嗎？",
-	"All users will lose their connection.": "所有使用者將會失去連線"
+	"All users will lose their connection.": "所有使用者將會失去連線",
+	"Export user data": "Export user data",
+	"Delete user": "Delete user",
+	"Do you really want to delete your user account?": "Do you really want to delete your user account?",
+	"This will delete your account, all notes that are owned by you and remove all references to your account from other notes.": "This will delete your account, all notes that are owned by you and remove all references to your account from other notes.",
+	"Help us translating on %s": "Help us translating on %s"
 }

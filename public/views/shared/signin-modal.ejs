@@ -10,31 +10,6 @@
 				</h4>
 			</div>
 			<div class="modal-body" style="text-align: center;">
-			</div>
-
-			<% if (registerKey) { %>
-			<div class="modal-header">
-				<h4 class="modal-title">
-					For new users
-				</h4>
-			</div>
-			<div class="modal-body" style="text-align: center;">
-				<form data-toggle="validator" role="form" class="form-horizontal" onsubmit="return false;">
-					<div class="form-group">
-						<div class="col-sm-12">
-							<input type="text" autocomplete="registerKey" class="form-control" id="registerKey" placeholder="Register Key">
-						</div>
-					</div>
-				</form>
-			</div>
-			<% }%>
-
-			<div class="modal-header">
-				<h4 class="modal-title">
-					<%= __('Choose method') %>
-				</h4>
-			</div>
-			<div class="modal-body" style="text-align: center;">
 
 				<% if (authProviders.facebook) { %>
 				<a href="<%- serverURL %>/auth/facebook" class="btn btn-lg btn-block btn-social btn-facebook">
@@ -143,7 +118,9 @@
 				<hr>
 				<% }%>
 				<% if (authProviders.email) { %>
-				<h4>Via Email</h4>
+				<h4>Email
+					<%= __('Sign In') %>
+				</h4>
 				<form data-toggle="validator" role="form" class="form-horizontal" method="post" enctype="application/x-www-form-urlencoded">
 					<div class="form-group">
 						<div class="col-sm-12">
@@ -159,11 +136,184 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<button type="submit" class="btn btn-primary" id="email-signin-btn" formaction="<%- serverURL %>/login">Sign in</button>
-							<% if (authProviders.allowEmailRegister) { %>
+							<button type="submit" class="btn btn-primary" formaction="<%- serverURL %>/login">
+								<%= __('Sign In') %></button>
+						</div>
+					</div>
+				</form>
+				<% }%>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade signup-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="mySmallModalLabel2">
+					<%= __('Register') %>
+				</h4>
+			</div>
+
+			<% if (registerKey) { %>
+			<div class="modal-body" style="text-align: center;">
+				<form data-toggle="validator" role="form" class="form-horizontal" onsubmit="return false;">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="text" autocomplete="registerKey" class="form-control" id="registerKey" placeholder="Register Key (Provided by NCLab)"
+							 required>
+						</div>
+					</div>
+				</form>
+			</div>
+			<hr>
+			<% }%>
+
+			<div class="modal-body" style="text-align: center;">
+
+				<% if (authProviders.facebook) { %>
+				<a href="<%- serverURL %>/auth/facebook" class="btn btn-lg btn-block btn-social btn-facebook">
+					<i class="fa fa-facebook"></i>
+					<%= __('Register via %s', 'Facebook') %>
+				</a>
+				<% } %>
+				<% if (authProviders.twitter) { %>
+				<a href="<%- serverURL %>/auth/twitter" class="btn btn-lg btn-block btn-social btn-twitter">
+					<i class="fa fa-twitter"></i>
+					<%= __('Register via %s', 'Twitter') %>
+				</a>
+				<% } %>
+				<% if (authProviders.github) { %>
+				<a href="<%- serverURL %>/auth/github" class="btn btn-lg btn-block btn-social btn-github">
+					<i class="fa fa-github"></i>
+					<%= __('Register via %s', 'GitHub') %>
+				</a>
+				<% } %>
+				<% if (authProviders.gitlab) { %>
+				<a href="<%- serverURL %>/auth/gitlab" class="btn btn-lg btn-block btn-social btn-soundcloud">
+					<i class="fa fa-gitlab"></i>
+					<%= __('Register via %s', 'GitLab') %>
+				</a>
+				<% } %>
+				<% if (authProviders.mattermost) { %>
+				<a href="<%- serverURL %>/auth/mattermost" class="btn btn-lg btn-block btn-social btn-soundcloud">
+					<i class="fa fa-mattermost"></i>
+					<%= __('Register via %s', 'Mattermost') %>
+				</a>
+				<% } %>
+				<% if (authProviders.dropbox) { %>
+				<a href="<%- serverURL %>/auth/dropbox" class="btn btn-lg btn-block btn-social btn-dropbox">
+					<i class="fa fa-dropbox"></i>
+					<%= __('Register via %s', 'Dropbox') %>
+				</a>
+				<% } %>
+				<% if (authProviders.google) { %>
+				<a href="<%- serverURL %>/auth/google" class="btn btn-lg btn-block btn-social btn-google">
+					<i class="icon icon-google"></i>
+					<%= __('Register via %s', 'Google') %>
+				</a>
+				<% } %>
+				<% if (authProviders.saml) { %>
+				<a href="<%- serverURL %>/auth/saml" class="btn btn-lg btn-block btn-social btn-success">
+					<i class="fa fa-users"></i>
+					<%= __('Register via %s', 'SAML') %>
+				</a>
+				<% } %>
+				<% if (authProviders.oauth2) { %>
+				<a href="<%- serverURL %>/auth/oauth2" class="btn btn-lg btn-block btn-social btn-soundcloud">
+					<i class="fa fa-mail-forward"></i>
+					<%= __('Register via %s', authProviders.oauth2ProviderName || 'OAuth2') %>
+				</a>
+				<% } %>
+				<% if ((authProviders.facebook || authProviders.twitter || authProviders.github || authProviders.gitlab || authProviders.mattermost || authProviders.dropbox || authProviders.google || authProviders.saml || authProviders.oauth2) && authProviders.ldap) { %>
+				<hr>
+				<% }%>
+				<% if (authProviders.ldap) { %>
+				<h4>Via
+					<% if (authProviders.ldapProviderName) { %>
+					<%= authProviders.ldapProviderName %> (LDAP)
+					<% } else { %> LDAP
+					<% } %>
+				</h4>
+				<form data-toggle="validator" role="form" class="form-horizontal" method="post" enctype="application/x-www-form-urlencoded">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="username" class="form-control" name="username" placeholder="Username" required>
+							<span class="help-block control-label with-errors" style="display: inline;"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="password" class="form-control" name="password" placeholder="Password" required>
+							<span class="help-block control-label with_errors" style="display: inline;"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<button type="submit" class="btn btn-primary" formaction="<%- serverURL %>/auth/ldap">Sign in</button>
+						</div>
+					</div>
+				</form>
+				<% } %>
+				<% if ((authProviders.facebook || authProviders.twitter || authProviders.github || authProviders.gitlab || authProviders.mattermost || authProviders.dropbox || authProviders.google || authProviders.ldap || authProviders.oauth2) && authProviders.openID) { %>
+				<hr>
+				<% }%>
+				<% if (authProviders.openID) { %>
+				<h4>OpenID</h4>
+				<form data-toggle="validator" role="form" class="form-horizontal" method="post" enctype="application/x-www-form-urlencoded">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" name="openid_identifier" placeholder="OpenID" required>
+							<span class="help-block control-label with-errors" style="display: inline;"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<button type="submit" class="btn btn-primary" formaction="<%- serverURL %>/auth/openid">Sign in</button>
+						</div>
+					</div>
+				</form>
+				<% } %>
+				<% if ((authProviders.facebook || authProviders.twitter || authProviders.github || authProviders.gitlab || authProviders.mattermost || authProviders.dropbox || authProviders.google || authProviders.ldap || authProviders.oauth2 || authProviders.openID) && authProviders.email) { %>
+				<hr>
+				<% }%>
+				<% if (authProviders.allowEmailRegister) { %>
+				<h4>Email
+					<%= __('Register') %>
+				</h4>
+				<form data-toggle="validator" role="form" class="form-horizontal" method="post" enctype="application/x-www-form-urlencoded">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="email" class="form-control" name="email" placeholder="Email" required>
+							<span class="help-block control-label with-errors" style="display: inline;"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="password" class="form-control" name="password" placeholder="Password" required>
+							<span class="help-block control-label with-errors" style="display: inline;"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" name="displayName" placeholder="Display Name (optional)">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" name="photoUrl" placeholder="Avatar Url (optional)">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-12">
 							<input type="hidden" name="regkey" id="regkey-hidden">
-							<button type="submit" class="btn btn-default" id="email-signup-btn" formaction="<%- serverURL %>/register">Register</button>
-							<% }%>
+							<button type="submit" class="btn btn-primary" formaction="<%- serverURL %>/register">
+								<%= __('Register') %></button>
 						</div>
 					</div>
 				</form>

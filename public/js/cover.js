@@ -804,14 +804,6 @@ $('#registerKey').on('change', () => {
 
 	if ($('#regkey-hidden')) {
 		$('#regkey-hidden').val(regkey);
-		if (regkey) {
-			$('#email-signup-btn').attr('class', 'btn btn-primary');
-			$('#email-signin-btn').attr('class', 'btn btn-default');
-		}
-		else {
-			$('#email-signin-btn').attr('class', 'btn btn-primary');
-			$('#email-signup-btn').attr('class', 'btn btn-default');
-		}
 
 	}
 
